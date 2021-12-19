@@ -1,8 +1,9 @@
-# k8-crio-centos
-K8 Cluster with crio as container runtime in CentOS
+# k8-containerd-centos
+K8 Cluster with containerd as container runtime in CentOS7
 
 ## To the Cluster 
 kubectl apply -f https://k8s.io/examples/application/deployment.yaml
+
 kubectl get pods -o wide
 
 should return something like this
