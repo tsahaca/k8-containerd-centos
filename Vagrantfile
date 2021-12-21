@@ -11,7 +11,7 @@ Vagrant.configure(2) do |config|
   config.vm.define "kmaster-cnd" do |node|
     node.vm.box = "centos/7"
     node.vm.hostname = "kmaster-cnd.example.com"
-    node.vm.network "private_network", ip: "192.168.58.100"
+    node.vm.network "private_network", ip: "172.26.26.100"
     node.vm.provider "virtualbox" do |v|
       v.name = "kmaster-cnd"
       v.memory = 4096
@@ -27,7 +27,7 @@ Vagrant.configure(2) do |config|
     config.vm.define "kworker-cnd-#{i}" do |workernode|
       workernode.vm.box = "centos/7"
       workernode.vm.hostname = "kworker-cnd-#{i}.example.com"
-      workernode.vm.network "private_network", ip: "192.168.58.10#{i}"
+      workernode.vm.network "private_network", ip: "172.26.26.10#{i}"
       workernode.vm.provider "virtualbox" do |v|
         v.name = "kworker-cnd-#{i}"
         v.memory = 2048
