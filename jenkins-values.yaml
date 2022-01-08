@@ -1,0 +1,53 @@
+controller:
+  adminSecret: true
+  adminUser: admin
+  adminPassword: passw0rd!
+  numExecutors: 0
+  installPlugins:
+    - configuration-as-code:latest
+    - kubernetes:latest
+    - workflow-aggregator:latest
+    - workflow-job:latest
+    - credentials-binding:latest
+    - git:latest
+    - git-client:latest
+    - git-server:latest
+    - greenballs:latest
+    - blueocean:latest
+    - strict-crumb-issuer:latest
+    - http_request:latest
+    - matrix-project:latest
+    - jquery:latest
+    - artifactory:latest
+    - jdk-tool:latest
+    - matrix-auth:latest
+    - credentials:latest
+    - pipeline-utility-steps:latest
+    - docker-workflow:latest
+    - command-launcher:latest
+    - github-branch-source:latest
+  overwritePlugins: true
+  ingress:
+    enabled: true
+    hostName: jenkins.example.com
+    #  tls:
+    #  - secretName: devops-cert-jenkins
+    #    hosts:
+    #      - jenkins.example.com
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      #kubernetes.io/ssl-redirect: "true"
+persistence:
+  enabled: true
+  existingClaim: jenkins-pvc
+  storageClass: ""
+  annotations: {}
+  accessMode: "ReadWriteOnce"
+  size: "4Gi"
+  volumes:
+  #  - name: nothing
+  #    emptyDir: {}
+  mounts:
+  #  - mountPath: /var/nothing
+  #    name: nothing
+  #    readOnly: true
