@@ -3,18 +3,37 @@
 
 ENV['VAGRANT_NO_PARALLEL'] = 'yes'
 
+# Config for NFS Server
+Vagrant.configure("2") do |cf|
+  cf.disksize.size = '20GB'
+
+  # NFS Server
+  cf.vm.define "nfs-server" do |nfs|
+    nfs.vm.box = "archlinux/archlinux"
+    nfs.vm.hostname = "nfs-server.example.com"
+    nfs.vm.network "private_network", ip: "172.26.26.99"
+
+    nfs.vm.provider "virtualbox" do |n|
+      n.name = "nfs-server"
+      n.memory = 1024
+      n.cpus = 1
+    end
+    nfs.vm.provision "shell",path: "bootstrap_nfs.sh"
+  end
+end
+
 Vagrant.configure(2) do |config|
 
   config.vm.provision "shell", path: "bootstrap.sh"
 
   # Kubernetes Master Server
-  config.vm.define "kmaster-cnd" do |node|
+  config.vm.define "kmaster" do |node|
     node.vm.box = "centos/7"
-    node.vm.hostname = "kmaster-cnd.example.com"
+    node.vm.hostname = "kmaster.example.com"
     node.vm.network "private_network", ip: "172.26.26.100"
     node.vm.provider "virtualbox" do |v|
-      v.name = "kmaster-cnd"
-      v.memory = 8192
+      v.name = "kmaster"
+      v.memory = 4096
       v.cpus = 2
     end
     node.vm.provision "shell", path: "bootstrap_kmaster.sh"
@@ -24,13 +43,13 @@ Vagrant.configure(2) do |config|
 
   # Kubernetes Worker Nodes
   (1..NodeCount).each do |i|
-    config.vm.define "kworker-cnd-#{i}" do |workernode|
+    config.vm.define "kworker#{i}" do |workernode|
       workernode.vm.box = "centos/7"
-      workernode.vm.hostname = "kworker-cnd-#{i}.example.com"
+      workernode.vm.hostname = "kworker#{i}.example.com"
       workernode.vm.network "private_network", ip: "172.26.26.10#{i}"
       workernode.vm.provider "virtualbox" do |v|
-        v.name = "kworker-cnd-#{i}"
-        v.memory = 4096
+        v.name = "kworker#{i}"
+        v.memory = 2048
         v.cpus = 1
       end
       workernode.vm.provision "shell", path: "bootstrap_kworker.sh"
