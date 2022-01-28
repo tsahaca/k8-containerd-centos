@@ -40,7 +40,6 @@ Vagrant.configure(2) do |config|
     
     node.vm.network "private_network", ip: "172.26.26.100"
     
-    
     node.vm.provider :virtualbox do |v|
       v.name    = "kmaster"
       v.memory  = 4096
@@ -52,8 +51,6 @@ Vagrant.configure(2) do |config|
       v.nested  = true
       v.cpus    = 2
     end
-    
-    
     
     node.vm.provision "shell", path: "bootstrap_kmaster.sh"
   end
@@ -79,7 +76,6 @@ Vagrant.configure(2) do |config|
         v.nested  = true
         v.cpus    = 1
       end
-      
       
       workernode.vm.provision "shell", path: "bootstrap_kworker.sh"
     end
