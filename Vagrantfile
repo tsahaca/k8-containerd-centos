@@ -5,7 +5,6 @@ ENV['VAGRANT_NO_PARALLEL'] = 'yes'
 
 # Config for NFS Server
 Vagrant.configure("2") do |cf|
-  cf.disksize.size = '20GB'
 
   # NFS Server
   cf.vm.define "nfs-server" do |nfs|
