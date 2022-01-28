@@ -2,6 +2,7 @@
 # vi: set ft=ruby :
 
 ENV['VAGRANT_NO_PARALLEL'] = 'yes'
+ENV['VAGRANT_DEFAULT_PROVIDER'] = 'libvirt'
 
 # Config for NFS Server
 Vagrant.configure("2") do |cf|
