@@ -11,13 +11,21 @@ Vagrant.configure("2") do |cf|
   cf.vm.define "nfs-server" do |nfs|
     nfs.vm.box = "archlinux/archlinux"
     nfs.vm.hostname = "nfs-server.example.com"
+   
     nfs.vm.network "private_network", ip: "172.26.26.99"
 
-    nfs.vm.provider "virtualbox" do |n|
-      n.name = "nfs-server"
-      n.memory = 1024
-      n.cpus = 1
+    nfs.vm.provider :virtualbox do |v|
+      v.name    = "kmaster"
+      v.memory  = 1024
+      v.cpus    =  1
     end
+  
+    nfs.vm.provider :libvirt do |v|
+      v.memory  = 1024
+      v.nested  = true
+      v.cpus    = 1
+    end
+    
     nfs.vm.provision "shell",path: "bootstrap_nfs.sh"
   end
 end
@@ -30,12 +38,24 @@ Vagrant.configure(2) do |config|
   config.vm.define "kmaster" do |node|
     node.vm.box = "centos/7"
     node.vm.hostname = "kmaster.example.com"
+    
     node.vm.network "private_network", ip: "172.26.26.100"
-    node.vm.provider "virtualbox" do |v|
-      v.name = "kmaster"
-      v.memory = 4096
-      v.cpus = 2
+    
+    
+    node.vm.provider :virtualbox do |v|
+      v.name    = "kmaster"
+      v.memory  = 4096
+      v.cpus    =  2
     end
+  
+    node.vm.provider :libvirt do |v|
+      v.memory  = 4096
+      v.nested  = true
+      v.cpus    = 2
+    end
+    
+    
+    
     node.vm.provision "shell", path: "bootstrap_kmaster.sh"
   end
 
@@ -46,12 +66,22 @@ Vagrant.configure(2) do |config|
     config.vm.define "kworker#{i}" do |workernode|
       workernode.vm.box = "centos/7"
       workernode.vm.hostname = "kworker#{i}.example.com"
+      
       workernode.vm.network "private_network", ip: "172.26.26.10#{i}"
-      workernode.vm.provider "virtualbox" do |v|
-        v.name = "kworker#{i}"
-        v.memory = 2048
-        v.cpus = 1
+      
+      workernode.vm.provider :virtualbox do |v|
+        v.name    = "kworker#{i}"
+        v.memory  = 2048
+        v.cpus    = 1
       end
+
+      workernode.vm.provider :libvirt do |v|
+        v.memory  = 2048
+        v.nested  = true
+        v.cpus    = 1
+      end
+      
+      
       workernode.vm.provision "shell", path: "bootstrap_kworker.sh"
     end
   end
