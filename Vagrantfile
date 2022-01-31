@@ -2,33 +2,9 @@
 # vi: set ft=ruby :
 
 ENV['VAGRANT_NO_PARALLEL'] = 'yes'
+
 ENV['VAGRANT_DEFAULT_PROVIDER'] = 'libvirt'
 
-# Config for NFS Server
-Vagrant.configure("2") do |cf|
-
-  # NFS Server
-  cf.vm.define "nfs-server" do |nfs|
-    nfs.vm.box = "archlinux/archlinux"
-    nfs.vm.hostname = "nfs-server.example.com"
-   
-    nfs.vm.network "private_network", ip: "172.26.26.99"
-
-    nfs.vm.provider :virtualbox do |v|
-      v.name    = "kmaster"
-      v.memory  = 1024
-      v.cpus    =  1
-    end
-  
-    nfs.vm.provider :libvirt do |v|
-      v.memory  = 1024
-      v.nested  = true
-      v.cpus    = 1
-    end
-    
-    nfs.vm.provision "shell",path: "bootstrap_nfs.sh"
-  end
-end
 
 Vagrant.configure(2) do |config|
 
@@ -36,11 +12,14 @@ Vagrant.configure(2) do |config|
 
   # Kubernetes Master Server
   config.vm.define "kmaster" do |node|
-    node.vm.box = "centos/7"
-    node.vm.hostname = "kmaster.example.com"
-    
-    node.vm.network "private_network", ip: "172.26.26.100"
-    
+  
+    node.vm.box               = "generic/ubuntu2004"
+    node.vm.box_check_update  = false
+    node.vm.box_version       = "3.3.0"
+    node.vm.hostname          = "kmaster.example.com"
+
+    node.vm.network "private_network", ip: "172.16.16.100"
+  
     node.vm.provider :virtualbox do |v|
       v.name    = "kmaster"
       v.memory  = 4096
@@ -52,34 +31,42 @@ Vagrant.configure(2) do |config|
       v.nested  = true
       v.cpus    = 2
     end
-    
+  
     node.vm.provision "shell", path: "bootstrap_kmaster.sh"
+  
   end
 
-  NodeCount = 2
 
   # Kubernetes Worker Nodes
+  NodeCount = 2
+
   (1..NodeCount).each do |i|
-    config.vm.define "kworker#{i}" do |workernode|
-      workernode.vm.box = "centos/7"
-      workernode.vm.hostname = "kworker#{i}.example.com"
-      
-      workernode.vm.network "private_network", ip: "172.26.26.10#{i}"
-      
-      workernode.vm.provider :virtualbox do |v|
+
+    config.vm.define "kworker#{i}" do |node|
+
+      node.vm.box               = "generic/ubuntu2004"
+      node.vm.box_check_update  = false
+      node.vm.box_version       = "3.3.0"
+      node.vm.hostname          = "kworker#{i}.example.com"
+
+      node.vm.network "private_network", ip: "172.16.16.10#{i}"
+
+      node.vm.provider :virtualbox do |v|
         v.name    = "kworker#{i}"
         v.memory  = 2048
         v.cpus    = 1
       end
 
-      workernode.vm.provider :libvirt do |v|
+      node.vm.provider :libvirt do |v|
         v.memory  = 2048
         v.nested  = true
         v.cpus    = 1
       end
-      
-      workernode.vm.provision "shell", path: "bootstrap_kworker.sh"
+
+      node.vm.provision "shell", path: "bootstrap_kworker.sh"
+
     end
+
   end
 
 end

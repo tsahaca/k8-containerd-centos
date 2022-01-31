@@ -3,10 +3,10 @@
 # Update hosts file
 echo "[TASK 1] Update /etc/hosts file"
 cat >>/etc/hosts<<EOF
-172.26.26.100   kmaster.example.com    kmaster
-172.26.26.101   kworker1.example.com   kworker1
-172.26.26.102   kworker2.example.com   kworker2
-172.26.26.99    nfs-server.example.com nfs-server
+172.16.16.100   kmaster.example.com    kmaster
+172.16.16.101   kworker1.example.com   kworker1
+172.16.16.102   kworker2.example.com   kworker2
+172.16.16.99    nfs-server.example.com nfs-server
 EOF
 
 echo "[TASK 2] Download and install NFS server"

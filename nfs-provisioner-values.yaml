@@ -8,8 +8,10 @@ image:
 imagePullSecrets: []
 
 nfs:
-  server: 172.26.26.99
-  path: /srv/nfs/kubedata/storage
+ # server: 192.168.1.55
+ # path: /srv/kubernetes/volume2
+  server: 172.16.16.99
+  path: /srv/nfs/kubedata/db
   mountOptions:
   volumeName: nfs-subdir-external-provisioner-root
   # Reclaim policy for the main nfs volume
