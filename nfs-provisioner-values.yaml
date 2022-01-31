@@ -8,7 +8,7 @@ image:
 imagePullSecrets: []
 
 nfs:
-  server: 172.26.26.99
+  server: 172.16.16.99
   path: /srv/nfs/kubedata/storage
   mountOptions:
   volumeName: nfs-subdir-external-provisioner-root

@@ -1,0 +1,2 @@
+== NFS Server based on Arch Linux
+. vagrant plugin install vagrant-disksize
