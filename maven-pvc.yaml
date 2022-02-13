@@ -4,6 +4,7 @@ metadata:
   name: maven-repo-storage
   namespace: jenkins
 spec:
+  storageClassName: nfs-client
   accessModes:
     - ReadWriteOnce
   resources:
