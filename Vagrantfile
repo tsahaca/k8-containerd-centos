@@ -27,6 +27,8 @@ Vagrant.configure(2) do |config|
     end
   
     node.vm.provider :libvirt do |v|
+      v.qemu_use_session = false
+
       v.memory  = 4096
       v.nested  = true
       v.cpus    = 2
@@ -58,6 +60,8 @@ Vagrant.configure(2) do |config|
       end
 
       node.vm.provider :libvirt do |v|
+        v.qemu_use_session = false
+
         v.memory  = 2048
         v.nested  = true
         v.cpus    = 1
