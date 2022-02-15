@@ -21,6 +21,7 @@ Vagrant.configure("2") do |cf|
     end
   
     nfs.vm.provider :libvirt do |v|
+      v.qemu_use_session = false
       v.memory  = 1024
       v.nested  = true
       v.cpus    = 1
