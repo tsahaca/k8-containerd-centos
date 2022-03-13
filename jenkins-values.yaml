@@ -26,6 +26,7 @@ controller:
     - docker-workflow:latest
     - command-launcher:latest
     - github-branch-source:latest
+    - stage-view:latest
   overwritePlugins: true
   ingress:
     enabled: true
