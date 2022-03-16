@@ -80,6 +80,9 @@ EOF
 ##Install Kubernetes, specify Version as CRI-O
 yum install -y kubelet-1.22.4-0 kubeadm-1.22.4-0 kubectl-1.22.4-0 >/dev/null 2>&1
 
+echo "[TASK# 14] Pull required containers"
+kubeadm config images pull >/dev/null 2>&1
+
 # Start and Enable kubelet service
 echo "[TASK 10] Enable and start kubelet service"
 systemctl daemon-reload
@@ -111,7 +114,7 @@ echo "export TERM=xterm" >> /etc/bashrc
 
 echo "[TASK 13] Update /etc/hosts file"
 cat >>/etc/hosts<<EOF
-172.26.26.100   kmaster-cnd.example.com     kmaster-cnd
-172.26.26.101   kworker-cnd-1.example.com   kworker-cnd-1
-172.26.26.102   kworker-cnd-2.example.com   kworker-cnd-2
+172.16.16.100   kmaster.example.com    kmaster
+172.16.16.101   kworker1.example.com   kworker1
+172.16.16.102   kworker2.example.com   kworker2
 EOF
