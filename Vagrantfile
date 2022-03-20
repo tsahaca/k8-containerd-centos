@@ -13,9 +13,8 @@ Vagrant.configure(2) do |config|
   # Kubernetes Master Server
   config.vm.define "kmaster" do |node|
   
-    node.vm.box               = "generic/ubuntu2004"
+    node.vm.box               = "centos/stream8"
     node.vm.box_check_update  = false
-    node.vm.box_version       = "3.3.0"
     node.vm.hostname          = "kmaster.example.com"
 
     node.vm.network "private_network", ip: "172.16.16.100"
@@ -46,9 +45,8 @@ Vagrant.configure(2) do |config|
 
     config.vm.define "kworker#{i}" do |node|
 
-      node.vm.box               = "generic/ubuntu2004"
+      node.vm.box               = "centos/stream8"
       node.vm.box_check_update  = false
-      node.vm.box_version       = "3.3.0"
       node.vm.hostname          = "kworker#{i}.example.com"
 
       node.vm.network "private_network", ip: "172.16.16.10#{i}"
