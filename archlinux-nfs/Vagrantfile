@@ -16,13 +16,13 @@ Vagrant.configure("2") do |cf|
 
     nfs.vm.provider :virtualbox do |v|
       v.name    = "nfs-server"
-      v.memory  = 1024
-      v.cpus    =  1
+      v.memory  = 256
+      v.cpus    = 1
     end
   
     nfs.vm.provider :libvirt do |v|
       v.qemu_use_session = false
-      v.memory  = 1024
+      v.memory  = 256
       v.nested  = true
       v.cpus    = 1
     end
