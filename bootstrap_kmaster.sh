@@ -18,7 +18,7 @@ chown -R vagrant:vagrant /home/vagrant/.kube
 echo "[TASK# 17] Deploy Calico network"
 ## su - vagrant -c "kubectl create -f https://docs.projectcalico.org/v3.18/manifests/calico.yaml"
 #kubectl --kubeconfig=/etc/kubernetes/admin.conf create -f https://docs.projectcalico.org/manifests/calico.yaml >/dev/null 2>&1
-kubectl --kubeconfig=/etc/kubernetes/admin.conf create -f kube-flannel.yml >/dev/null 2>&1
+kubectl --kubeconfig=/etc/kubernetes/admin.conf create -f https://raw.githubusercontent.com/tsahaca/k8-containerd-centos/fedora/kube-flannel.yml >/dev/null 2>&1
 
 
 # Generate Cluster join command
